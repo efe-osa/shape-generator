@@ -1,0 +1,4 @@
+{
+    "*.+ts?(x)": ["eslint --fix ", "prettier --write", "git add ." , "git commit -m \"lint fixes\" "],
+    "*.+(json|css|md)": ["prettier --write", "git add ."]
+}
