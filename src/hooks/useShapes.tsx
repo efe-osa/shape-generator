@@ -10,7 +10,12 @@ const useShapes = ({
     activeId === idx ? 'outline' : ''
   const svgShapes: {[key: string]: any} = {
     circle: ({colour, radius, id, ...rest}: Circle, activeId: number) => (
-      <svg viewBox="0 0 110 110" fill={colour} stroke={colour}>
+      <svg
+        data-testid="svg"
+        viewBox="0 0 110 110"
+        fill={colour}
+        stroke={colour}
+      >
         <circle
           onClick={() => handleEditShape({colour, radius, id, ...rest})}
           className={`circle ${isActive(id, activeId)}`}
@@ -22,7 +27,12 @@ const useShapes = ({
       </svg>
     ),
     ellipse: ({colour, radius, id, ...rest}: Circle, activeId: number) => (
-      <svg viewBox="0 0 150 100" fill={colour} stroke={colour}>
+      <svg
+        data-testid="svg"
+        viewBox="0 0 150 100"
+        fill={colour}
+        stroke={colour}
+      >
         <ellipse
           onClick={() => handleEditShape({colour, radius, id, ...rest})}
           className={`ellipse ${isActive(id, activeId)}`}
@@ -40,6 +50,7 @@ const useShapes = ({
       activeId: number,
     ) => (
       <svg
+        data-testid="svg"
         viewBox={`0 0 ${length + 10} ${height + 10} `}
         fill={colour}
         stroke={colour}
@@ -60,6 +71,7 @@ const useShapes = ({
       activeId: number,
     ) => (
       <svg
+        data-testid="svg"
         viewBox={`0 0 ${length + 10} ${height + 10} `}
         fill={colour}
         stroke={colour}
@@ -79,7 +91,12 @@ const useShapes = ({
 
       activeId: number,
     ) => (
-      <svg viewBox="0 0 210 210" fill={colour} stroke={colour}>
+      <svg
+        data-testid="svg"
+        viewBox="0 0 210 210"
+        fill={colour}
+        stroke={colour}
+      >
         <polygon
           onClick={() => handleEditShape({colour, length, height, id, ...rest})}
           className={`triangle ${isActive(id, activeId)}`}
@@ -93,7 +110,12 @@ const useShapes = ({
       {colour, length, height, id, ...rest}: Polygon,
       activeId: number,
     ) => (
-      <svg viewBox="0 0 210 210" fill={colour} stroke={colour}>
+      <svg
+        data-testid="svg"
+        viewBox="0 0 210 210"
+        fill={colour}
+        stroke={colour}
+      >
         <polygon
           onClick={() => handleEditShape({colour, length, height, id, ...rest})}
           className={`${isActive(id, activeId)}`}
@@ -106,6 +128,7 @@ const useShapes = ({
       activeId: number,
     ) => (
       <svg
+        data-testid="svg"
         width={length}
         height={height}
         viewBox="0 0 210 210"

@@ -22,7 +22,11 @@ const ShapeQueryForm = () => {
   const svgShapes = useShapes({handleEditShape})
   const renderShapes = () => {
     if (error) {
-      return <h1 className="error">{error}</h1>
+      return (
+        <h1 className="error" data-testid="error">
+          {error}
+        </h1>
+      )
     }
 
     return shapes.length > 0
@@ -49,6 +53,7 @@ const ShapeQueryForm = () => {
             name="shape-type"
             id="shape-type"
             onChange={handleSelectShape}
+            data-testid="shapetype"
           >
             <option value="">Choose...</option>
             {options.map((shape, idx) => (
@@ -63,6 +68,7 @@ const ShapeQueryForm = () => {
             Select a colour
           </label>
           <input
+            data-testid="colour"
             required
             className="form-input__colour"
             value={currentColour}
@@ -80,6 +86,7 @@ const ShapeQueryForm = () => {
                 Enter a radius between 1-50
               </label>
               <input
+                data-testid="radius"
                 required
                 value={radius}
                 className="form-input"
@@ -99,6 +106,7 @@ const ShapeQueryForm = () => {
                 Enter the length between 1-200
               </label>
               <input
+                data-testid="length"
                 required
                 className="form-input"
                 type="number"
@@ -116,6 +124,7 @@ const ShapeQueryForm = () => {
                   Enter the length between 1-100
                 </label>
                 <input
+                  data-testid="length"
                   required
                   className="form-input"
                   type="number"
@@ -131,6 +140,7 @@ const ShapeQueryForm = () => {
                   Enter the height between 1-100
                 </label>
                 <input
+                  data-testid="height"
                   required
                   className="form-input"
                   type="number"
@@ -159,6 +169,7 @@ const ShapeQueryForm = () => {
             type="button"
             className="form-button"
             onClick={handleDrawShape}
+            data-testid="draw-btn"
           >
             Draw
           </button>
@@ -166,7 +177,9 @@ const ShapeQueryForm = () => {
       </form>
       <section className="playground">
         <h2>RESULTS:</h2>
-        <div className="shapes">{renderShapes()}</div>
+        <div className="shapes" data-testid="shape-results">
+          {renderShapes()}
+        </div>
       </section>
     </section>
   )
