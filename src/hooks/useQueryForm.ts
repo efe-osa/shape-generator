@@ -56,38 +56,41 @@ const useQueryForm = () => {
   }
 
   const handleDrawShape = () => {
-    const hasValues = currentShapeName.length > 0 && currentColour.length > 0
-    if (
-      (hasValues && length && height && length > 200 && height > 200) ||
-      (hasValues && radius && radius > 50)
-    ) {
+    const hasValues =
+      (currentShapeName.length > 0 && radius > 0) ||
+      (currentShapeName.length > 0 && length > 0) ||
+      (currentShapeName.length > 0 && length > 0 && height > 0)
+    if (!hasValues) {
       setError('Invalid values! Check your input')
-      console.log('error', error)
-      return setTimeout(() => setError(''), 3500)
+      setTimeout(() => setError(''), 3500)
     }
 
-    let newShape: Polygon | Circle,
-      shapeAttrs: TShape = {
-        id: shapes.length,
-        type: currentShapeName,
-        colour: currentColour,
-      }
-
-    newShape =
-      currentShapeName === 'circle' || currentShapeName === 'ellipse'
-        ? {...shapeAttrs, radius}
-        : {
-            ...shapeAttrs,
-            length,
-            height: currentShapeName === 'square' ? length : height,
-          }
-
-    if (typeof activeId === 'number' && activeId >= 0) {
-      updateShape(newShape)
+    if ((length > 200 && height > 200) || radius > 50) {
+      setError('Invalid values! Check your input')
+      setTimeout(() => setError(''), 3500)
     } else {
-      saveShape(newShape)
+      let newShape: Polygon | Circle,
+        shapeAttrs: TShape = {
+          id: shapes.length,
+          type: currentShapeName,
+          colour: currentColour,
+        }
+
+      newShape =
+        currentShapeName === 'circle' || currentShapeName === 'ellipse'
+          ? {...shapeAttrs, radius}
+          : {
+              ...shapeAttrs,
+              length,
+              height: currentShapeName === 'square' ? length : height,
+            }
+
+      typeof activeId === 'number' && activeId >= 0
+        ? updateShape(newShape)
+        : saveShape(newShape)
+
+      resetForm()
     }
-    resetForm()
   }
 
   const handleEditShape = (shape: Circle | Polygon) => {

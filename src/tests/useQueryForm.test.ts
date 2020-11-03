@@ -5,7 +5,7 @@ import 'fake-indexeddb/auto'
 import {cleanup} from '@testing-library/react'
 
 afterEach(cleanup)
-jest.setTimeout(7000)
+
 describe('test hook', () => {
   const {result, waitForNextUpdate, waitForValueToChange} = renderHook(() =>
     useQueryForm(),
@@ -27,24 +27,49 @@ describe('test hook', () => {
         selectInput(`${circleAttr.radius}`, 'radius'),
       )
     })
-
-    await waitForValueToChange(() => result.current.radius)
-
+    await waitForNextUpdate()
+    console.log('result.current', result.current)
     expect(result.current.currentShapeName).toBe(circleAttr.type)
-    expect(result.current.currentColour).toBe(circleAttr.colour)
     expect(result.current.radius).toBe(circleAttr.radius)
-    expect(result.current.shapes).not.toBe(0)
+    expect(result.current.currentColour).toBe(circleAttr.colour)
+
+    //add shape
+    act(() => {
+      result.current.handleDrawShape()
+    })
+    await waitForValueToChange(() => result.current.shapes)
+    expect(result.current.shapes).not.toHaveLength(0)
   })
 
   it('updates shape attributes', async () => {
+    const newShape = 'ellipse'
+    const newColour = '#ffff00'
     act(() => {
       result.current.handleEditShape(circleAttr)
     })
+
     await waitForValueToChange(() => result.current.activeId)
 
+    expect(result.current.activeId).toBe(circleAttr.id)
     expect(result.current.currentColour).toBe(circleAttr.colour)
     expect(result.current.currentShapeName).toBe(circleAttr.type)
     expect(result.current.radius).toBe(circleAttr.radius)
-    expect(result.current.activeId).toBe(circleAttr.id)
+
+    act(() => {
+      result.current.handleSelectShape(selectInput(newShape))
+      result.current.handleInputChange(selectInput(newColour, 'colour'))
+    })
+
+    await waitForNextUpdate()
+    expect(result.current.currentColour).toBe(newColour)
+    expect(result.current.currentShapeName).toBe(newShape)
+
+    //edit shape
+    act(() => {
+      result.current.handleDrawShape()
+    })
+    console.log('edit', result.current)
+    await waitForValueToChange(() => result.current.shapes)
+    expect(result.current.shapes?.[0].type).toBe(newShape)
   })
 })
