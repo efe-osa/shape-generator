@@ -1,49 +1,50 @@
 import {renderHook, act} from '@testing-library/react-hooks'
 import useQueryForm from '../hooks/useQueryForm'
-import {IDBService} from '../helpers/initCache'
+import {selectInput, circleAttr} from './utils'
+import 'fake-indexeddb/auto'
+import {cleanup} from '@testing-library/react'
 
-const selectInput = (value: string, name?: string) => {
-  return {
-    target: {
-      value,
-      name,
-    },
-  } as any
-}
-
+afterEach(cleanup)
+jest.setTimeout(7000)
 describe('test hook', () => {
-  const {result, waitForNextUpdate} = renderHook(() => useQueryForm())
+  const {result, waitForNextUpdate, waitForValueToChange} = renderHook(() =>
+    useQueryForm(),
+  )
 
-  it('validates query form', () => {
-    act(() => result.current.handleDrawShape())
-    waitForNextUpdate()
-    expect(result.current.error).toNotBe('')
-  })
-
-  it('saves shape attributes', () => {
-    const db = IDBService()
-    const circleAtrr = {
-      radius: '20',
-      type: 'circle',
-      colour: '#000000',
-    }
-    result.current.handleSelectShape(selectInput(circleAtrr.type))
-    result.current.handleInputChange(selectInput(circleAtrr.colour, 'colour'))
-    result.current.handleInputChange(selectInput(circleAtrr.radius, 'radius'))
+  it('validates query form', async () => {
     act(() => {
       result.current.handleDrawShape()
-      db.add(circleAtrr, 1)
     })
+    await waitForNextUpdate()
+    expect(result.current.error).toContain('Invalid')
+  })
 
-    // 'it updates shape attributes'
-
-    let shape: any
+  it('saves shape', async () => {
     act(() => {
-      result.current.handleEditShape(1)
+      result.current.handleSelectShape(selectInput(circleAttr.type))
+      result.current.handleInputChange(selectInput(circleAttr.colour, 'colour'))
+      result.current.handleInputChange(
+        selectInput(`${circleAttr.radius}`, 'radius'),
+      )
     })
 
-    result.current.handleSelectShape(selectInput(shape.type))
-    result.current.handleInputChange(selectInput(shape.colour, 'colour'))
-    result.current.handleInputChange(selectInput(shape.radius, 'radius'))
+    await waitForValueToChange(() => result.current.radius)
+
+    expect(result.current.currentShapeName).toBe(circleAttr.type)
+    expect(result.current.currentColour).toBe(circleAttr.colour)
+    expect(result.current.radius).toBe(circleAttr.radius)
+    expect(result.current.shapes).not.toBe(0)
+  })
+
+  it('updates shape attributes', async () => {
+    act(() => {
+      result.current.handleEditShape(circleAttr)
+    })
+    await waitForValueToChange(() => result.current.activeId)
+
+    expect(result.current.currentColour).toBe(circleAttr.colour)
+    expect(result.current.currentShapeName).toBe(circleAttr.type)
+    expect(result.current.radius).toBe(circleAttr.radius)
+    expect(result.current.activeId).toBe(circleAttr.id)
   })
 })

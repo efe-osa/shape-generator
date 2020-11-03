@@ -127,6 +127,7 @@ svg {
   animation-name: fade-in;
   animation-duration: 0.6s;
   animation-timing-function: ease-out;
+  animation-play-state: running;
   transform-origin: center;
 }
 .square,
@@ -134,6 +135,7 @@ svg {
 .triangle {
   animation-name: fade-in;
   animation-duration: 0.5s;
+  animation-play-state: running;
   animation-timing-function: ease-out;
 }
 
@@ -145,19 +147,6 @@ svg {
   }
   100% {
     transform: scale(1);
-  }
-}
-@keyframes slide-in {
-  0%,
-  35% {
-    opacity: 0;
-    transform: translateX(-150px) translateY(-150px);
-  }
-  80% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: translate(0px);
   }
 }
 @keyframes App-logo-spin {

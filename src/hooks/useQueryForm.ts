@@ -37,7 +37,7 @@ const useQueryForm = () => {
   }
 
   const saveShape = async (newShape: Circle | Polygon) => {
-    shapesDB.add(newShape, shapes.length)
+    shapesDB.add(newShape, newShape.id)
   }
 
   const updateShape = async (newShape: Circle | Polygon) => {
@@ -62,11 +62,13 @@ const useQueryForm = () => {
       (hasValues && radius && radius > 50)
     ) {
       setError('Invalid values! Check your input')
+      console.log('error', error)
       return setTimeout(() => setError(''), 3500)
     }
 
     let newShape: Polygon | Circle,
       shapeAttrs: TShape = {
+        id: shapes.length,
         type: currentShapeName,
         colour: currentColour,
       }
@@ -88,23 +90,22 @@ const useQueryForm = () => {
     resetForm()
   }
 
-  const handleEditShape = (shapeIdx: number) => {
-    if (activeId !== null && activeId === shapeIdx) {
+  const handleEditShape = (shape: Circle | Polygon) => {
+    if (activeId !== null && activeId === shape.id) {
       setActiveId(null)
       resetForm()
     } else {
-      const activeShape = shapes[shapeIdx]
-      setCurrentColour(activeShape.colour)
-      setCurrentShapeName(activeShape.type)
-      setActiveId(shapeIdx)
+      setCurrentColour(shape.colour)
+      setCurrentShapeName(shape.type)
+      setActiveId(shape.id)
       if (
-        (activeShape.type === 'circle' || activeShape.type === 'ellipse') &&
-        'radius' in activeShape
+        (shape.type === 'circle' || shape.type === 'ellipse') &&
+        'radius' in shape
       ) {
-        setRadius(activeShape.radius)
-      } else if ('length' in activeShape) {
-        setLength(activeShape.length)
-        setHeight(activeShape.height)
+        setRadius(shape.radius)
+      } else if ('length' in shape) {
+        setLength(shape.length)
+        setHeight(shape.height)
       }
     }
   }

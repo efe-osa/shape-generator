@@ -29,9 +29,7 @@ const ShapeQueryForm = () => {
       ? shapes.map((shape, idx) => {
           const svg = svgShapes[shape.type]
           return (
-            <React.Fragment key={idx}>
-              {svg(shape, idx, activeId)}
-            </React.Fragment>
+            <React.Fragment key={idx}>{svg(shape, activeId)}</React.Fragment>
           )
         })
       : null

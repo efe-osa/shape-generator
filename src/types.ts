@@ -1,4 +1,5 @@
 export interface TShape {
+  id: number
   type: string
   colour: string
 }

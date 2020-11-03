@@ -4,16 +4,16 @@ import {Circle, Polygon} from '../types'
 const useShapes = ({
   handleEditShape,
 }: {
-  handleEditShape: (shapeIdx: number) => void
+  handleEditShape: (shape: Circle | Polygon) => void
 }) => {
   const isActive = (idx: number, activeId: number) =>
     activeId === idx ? 'outline' : ''
   const svgShapes: {[key: string]: any} = {
-    circle: ({colour, radius}: Circle, idx: number, activeId: number) => (
+    circle: ({colour, radius, id, ...rest}: Circle, activeId: number) => (
       <svg viewBox="0 0 110 110" fill={colour} stroke={colour}>
         <circle
-          onClick={() => handleEditShape(idx)}
-          className={`circle ${isActive(idx, activeId)}`}
+          onClick={() => handleEditShape({colour, radius, id, ...rest})}
+          className={`circle ${isActive(id, activeId)}`}
           fill={colour}
           cx="55"
           cy="55"
@@ -21,11 +21,11 @@ const useShapes = ({
         />
       </svg>
     ),
-    ellipse: ({colour, radius}: Circle, idx: number, activeId: number) => (
+    ellipse: ({colour, radius, id, ...rest}: Circle, activeId: number) => (
       <svg viewBox="0 0 150 100" fill={colour} stroke={colour}>
         <ellipse
-          onClick={() => handleEditShape(idx)}
-          className={`ellipse ${isActive(idx, activeId)}`}
+          onClick={() => handleEditShape({colour, radius, id, ...rest})}
+          className={`ellipse ${isActive(id, activeId)}`}
           fill={colour}
           cx="75"
           cy="50"
@@ -35,8 +35,8 @@ const useShapes = ({
       </svg>
     ),
     square: (
-      {colour, length, height}: Polygon,
-      idx: number,
+      {colour, length, height, id, ...rest}: Polygon,
+
       activeId: number,
     ) => (
       <svg
@@ -45,8 +45,8 @@ const useShapes = ({
         stroke={colour}
       >
         <rect
-          onClick={() => handleEditShape(idx)}
-          className={`square ${isActive(idx, activeId)}`}
+          onClick={() => handleEditShape({colour, length, height, id, ...rest})}
+          className={`square ${isActive(id, activeId)}`}
           x="5"
           y="5"
           height={height}
@@ -55,8 +55,8 @@ const useShapes = ({
       </svg>
     ),
     rectangle: (
-      {colour, length, height}: Polygon,
-      idx: number,
+      {colour, length, height, id, ...rest}: Polygon,
+
       activeId: number,
     ) => (
       <svg
@@ -65,8 +65,8 @@ const useShapes = ({
         stroke={colour}
       >
         <rect
-          onClick={() => handleEditShape(idx)}
-          className={`rect ${isActive(idx, activeId)}`}
+          onClick={() => handleEditShape({colour, length, height, id, ...rest})}
+          className={`rect ${isActive(id, activeId)}`}
           x="5"
           y="5"
           height={height}
@@ -74,29 +74,35 @@ const useShapes = ({
         />
       </svg>
     ),
-    triangle: ({colour, length}: Polygon, idx: number, activeId: number) => (
+    triangle: (
+      {colour, length, height, id, ...rest}: Polygon,
+
+      activeId: number,
+    ) => (
       <svg viewBox="0 0 210 210" fill={colour} stroke={colour}>
         <polygon
-          onClick={() => handleEditShape(idx)}
-          className={`triangle ${isActive(idx, activeId)}`}
+          onClick={() => handleEditShape({colour, length, height, id, ...rest})}
+          className={`triangle ${isActive(id, activeId)}`}
           points={`5,5 5,${5 + length} ${5 + length},${5 + length},${
             length + 5
           }`}
         />
       </svg>
     ),
-    trapezium: ({colour, length}: Polygon, idx: number, activeId: number) => (
+    trapezium: (
+      {colour, length, height, id, ...rest}: Polygon,
+      activeId: number,
+    ) => (
       <svg viewBox="0 0 210 210" fill={colour} stroke={colour}>
         <polygon
-          onClick={() => handleEditShape(idx)}
-          className={`${isActive(idx, activeId)}`}
+          onClick={() => handleEditShape({colour, length, height, id, ...rest})}
+          className={`${isActive(id, activeId)}`}
           points={`m5,5 H${length}z`}
         />
       </svg>
     ),
     star: (
-      {colour, length, height}: Polygon,
-      idx: number,
+      {colour, length, height, id, ...rest}: Polygon,
       activeId: number,
     ) => (
       <svg
@@ -107,8 +113,8 @@ const useShapes = ({
         stroke={colour}
       >
         <polygon
-          onClick={() => handleEditShape(idx)}
-          className={`star ${isActive(idx, activeId)}`}
+          onClick={() => handleEditShape({colour, length, height, id, ...rest})}
+          className={`star ${isActive(id, activeId)}`}
           points="100,10 40,198 190,78 10,78 160,198"
         />
       </svg>

@@ -1,10 +1,10 @@
-import {render, screen} from '@testing-library/react'
+import {render, screen, waitFor} from '@testing-library/react'
 import React from 'react'
 import App from './App'
 
-test('renders app', () => {
+test('renders app', async () => {
   render(<App />)
-
-  const appHeader = screen.getByTestId('app-header')
-  expect(appHeader).toBeInTheDocument()
+  expect(
+    await waitFor(() => screen.getByTestId('app-header')),
+  ).toBeInTheDocument()
 })
