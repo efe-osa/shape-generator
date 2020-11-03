@@ -9,7 +9,7 @@ afterEach(cleanup)
 describe('test hook', () => {
   const {result, waitForNextUpdate} = renderHook(() => useQueryForm())
 
-  it('validates query form', async () => {
+  it('validates form values', async () => {
     act(() => {
       result.current.handleDrawShape()
     })
