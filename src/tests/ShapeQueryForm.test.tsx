@@ -1,19 +1,23 @@
-import {cleanup, fireEvent, render, screen} from '@testing-library/react'
+import {act, cleanup, fireEvent, render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import 'fake-indexeddb/auto'
 import ShapeQueryForm from '../components/ShapeQueryForm'
 import {circleAttr, selectInput} from './utils'
 
-afterAll(cleanup)
+afterEach(cleanup)
 
-test('disables draw button', () => {
-  render(<ShapeQueryForm />)
+test('disables draw button', async () => {
+  await act(async () => {
+    render(<ShapeQueryForm />)
+  })
   const drawBtn = screen.getByTestId('draw-btn')
   expect(drawBtn).toBeDisabled()
 })
 
 test('validates query form', async () => {
-  render(<ShapeQueryForm />)
+  await act(async () => {
+    render(<ShapeQueryForm />)
+  })
   const colour = screen.getByTestId('colour')
   const shapeType = screen.getByTestId('shapetype')
   const drawBtn = screen.getByTestId('draw-btn')
@@ -36,7 +40,9 @@ test('validates query form', async () => {
 })
 
 test('handles text input change', async () => {
-  render(<ShapeQueryForm />)
+  await act(async () => {
+    render(<ShapeQueryForm />)
+  })
   const shapeType = screen.getByTestId('shapetype')
   const drawBtn = screen.getByTestId('draw-btn')
   const colour = screen.getByTestId('colour')
