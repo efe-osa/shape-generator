@@ -1,12 +1,13 @@
 import useQueryForm from 'hooks/useQueryForm'
 import useShapes from 'hooks/useShapes'
-import React from 'react'
+import React, {useEffect} from 'react'
 
 const ShapeQueryForm = () => {
   const {
     activeId,
     currentShapeName,
     currentColour,
+    deleteShape,
     error,
     handleEditShape,
     handleSelectShape,
@@ -19,6 +20,19 @@ const ShapeQueryForm = () => {
     options,
     radius,
   } = useQueryForm()
+
+  useEffect(() => {
+    const handleKeyDown = ({key}: any) => {
+      console.log('key', key)
+      if (key === 'Delete') {
+        deleteShape()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [deleteShape])
   const svgShapes = useShapes({handleEditShape})
   const renderShapes = () => {
     if (error) {
@@ -166,7 +180,7 @@ const ShapeQueryForm = () => {
                   length <= 0
             }
             aria-label="draw"
-            type="button"
+            type="submit"
             className="form-button"
             onClick={handleDrawShape}
             data-testid="draw-btn"

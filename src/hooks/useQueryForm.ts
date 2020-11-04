@@ -112,6 +112,13 @@ const useQueryForm = () => {
       }
     }
   }
+  const deleteShape = () => {
+    if (activeId !== null) {
+      shapesDB.remove(activeId)
+      setActiveId(null)
+      resetForm()
+    }
+  }
 
   useEffect(() => {
     shapesDB.getAll().then(data => {
@@ -123,6 +130,7 @@ const useQueryForm = () => {
     activeId,
     currentShapeName,
     currentColour,
+    deleteShape,
     error,
     isCircular,
     handleSelectShape,
