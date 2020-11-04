@@ -50,12 +50,12 @@ export function IDBService() {
     }
   }
 
-  const add = async (value: Polygon | Circle | any) => {
+  const add = async (value: Polygon | Circle | any, key: number) => {
     try {
       const store = (await idbCache)
         .transaction(tableName, 'readwrite')
         .objectStore(tableName)
-      store.add(value)
+      store.add(value, key)
     } catch (err) {
       return err.message
     }

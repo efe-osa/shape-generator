@@ -37,7 +37,7 @@ const useQueryForm = () => {
   }
 
   const saveShape = async (newShape: Circle | Polygon) => {
-    shapesDB.add(newShape)
+    shapesDB.add(newShape, newShape.id)
   }
 
   const updateShape = async (newShape: Circle | Polygon) => {
