@@ -1,6 +1,5 @@
 import {renderHook, act} from '@testing-library/react-hooks'
 import useQueryForm from '../hooks/useQueryForm'
-import {selectInput, circleAttr} from './utils'
 import 'fake-indexeddb/auto'
 import {cleanup} from '@testing-library/react'
 

@@ -1,6 +1,7 @@
 import {act, cleanup, fireEvent, render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import 'fake-indexeddb/auto'
+import React from 'react'
 import ShapeQueryForm from '../components/ShapeQueryForm'
 import {circleAttr, selectInput} from './utils'
 

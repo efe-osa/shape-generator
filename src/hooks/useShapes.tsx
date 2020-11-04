@@ -129,11 +129,11 @@ const useShapes = ({
     ) => (
       <svg
         data-testid="svg"
-        width={length}
-        height={height}
         viewBox="0 0 210 210"
         fill={colour}
         stroke={colour}
+        width={length}
+        height={height}
       >
         <polygon
           onClick={() => handleEditShape({colour, length, height, id, ...rest})}

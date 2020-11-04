@@ -121,7 +121,7 @@ const ShapeQueryForm = () => {
             <>
               <div className="form-group">
                 <label className="label" htmlFor="length">
-                  Enter the length between 1-100
+                  Enter the length between 1-200
                 </label>
                 <input
                   data-testid="length"
@@ -137,7 +137,7 @@ const ShapeQueryForm = () => {
               </div>
               <div className="form-group">
                 <label className="label" htmlFor="height">
-                  Enter the height between 1-100
+                  Enter the height between 1-200
                 </label>
                 <input
                   data-testid="height"
