@@ -17,7 +17,6 @@ async function initialiseCache() {
     const db = await openDB<TData>(cacheName, version, {
       upgrade(db) {
         db.createObjectStore(tableName, {
-          keyPath: 'id',
           autoIncrement: true,
         })
       },
