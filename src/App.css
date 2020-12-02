@@ -15,6 +15,9 @@
   .label {
     margin-bottom: 0;
   }
+  .container {
+  grid-template-columns: 25% 75%;
+  }
 }
 
 .App-header {
@@ -30,7 +33,6 @@
 }
 .container {
   display: grid;
-  grid-template-columns: 25% 75%;
   height: 100vh;
   max-width: 100vw;
   width: 100%;
